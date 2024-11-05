@@ -16,10 +16,10 @@ import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import androidx.annotation.OptIn
-import androidx.annotation.RequiresApi
+
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.PRIORITY_DEFAULT
-import androidx.core.app.ServiceCompat
+
 import androidx.core.app.ServiceCompat.startForeground
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
@@ -37,6 +37,8 @@ class SongService: Service() {
     private var artist :String? = ""
     private var titleList = arrayListOf<String>()
     private var poster:String = ""
+
+    //Custom Binder
     inner class Mybinder: Binder(){
         fun getSongservice() = this@SongService
     }
@@ -47,15 +49,24 @@ class SongService: Service() {
         super.onRebind(intent)
     }
     private fun createNotification():Notification {
-          return  NotificationCompat.Builder(this).apply {
-                setContentTitle("Songs")
-                setOngoing(true)
-                setSmallIcon(R.drawable.baseline_play_circle_24)
-                setContentText("Music is playing")
-            }.build()
-
+       return  if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O){
+           NotificationCompat.Builder(this).apply {
+               setContentTitle("Songs")
+               setOngoing(true)
+               setSmallIcon(R.drawable.baseline_play_circle_24)
+               setContentText("Music is playing")
+           }.build()
+        }
+          else {
+           NotificationCompat.Builder(this, Constants.CHANNEL_ID).apply {
+               setContentTitle("Songs")
+               setOngoing(true)
+               setSmallIcon(R.drawable.baseline_play_circle_24)
+               setContentText("Music is playing")
+           }.build()
+       }
     }
-
+ // setting media player
     fun setUpSongs(list:ArrayList<String>,titles:ArrayList<String>,cover:String,singer:String){
         if (player != null && (player!!.hasNextMediaItem() || player!!.hasPreviousMediaItem())) {
             player?.clearMediaItems()
@@ -92,7 +103,7 @@ class SongService: Service() {
 
         return START_STICKY
     }
-    override fun onBind(intent: Intent?): IBinder? {
+    override fun onBind(intent: Intent?): IBinder {
         Log.d(tag,"On Bind Called ")
         if(player==null){
             player  = ExoPlayer.Builder(this).build()
@@ -129,6 +140,7 @@ class SongService: Service() {
         super.onTaskRemoved(rootIntent)
     }
 
+    // This is Media Player Notification
 @OptIn(UnstableApi::class)
 private fun newNotification(){
     val mediaadaptor  =  object :PlayerNotificationManager.MediaDescriptionAdapter{
