@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="65dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_margin="7dp"
+    android:backgroundTint="#F724322B"
+    app:cardElevation="20dp"
+    app:cardCornerRadius="7dp"
+
+
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+    <ImageView
+        tools:src ="@drawable/ic_launcher_background"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/songImage"
+        android:layout_marginStart="15dp"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        />
+    <LinearLayout
+        android:layout_weight="20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="5dp"
+        android:layout_gravity="center"
+        >
+        <TextView
+
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:textSize="20dp"
+            android:text="title"
+            android:id="@+id/songTitle"/>
+
+        <TextView
+
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:textSize="15dp"
+            android:text="title"
+            android:id="@+id/songArtist"/>
+
+    </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

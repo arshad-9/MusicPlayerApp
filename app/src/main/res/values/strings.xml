@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Harmonizer</string>
+    <string name="CHANNEL_DESCRIPTION">notification__descrip</string>
+    <string name="CHANNEL_NAME">CHANNEL_NAME</string>
+
+</resources>
